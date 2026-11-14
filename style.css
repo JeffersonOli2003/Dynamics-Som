@@ -106,9 +106,7 @@ h3 {
   display: block;
   height: 3px;
   background: var(--branco);
-  transition:
-    transform 0.25s,
-    opacity 0.25s;
+  transition: transform 0.25s, opacity 0.25s;
 }
 /* hambúrguer vira "X" quando o menu está aberto */
 .menu-check:checked + .burger span:nth-child(1) {
