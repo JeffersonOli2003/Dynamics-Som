@@ -1,5 +1,5 @@
 /* ==========================================================
-   DYNAMICS SOM — style.css (versão básica, sem JavaScript)
+   DYNAMICS SOM — style.css (versão responsiva, sem JavaScript)
    Para mudar as cores, edite as variáveis abaixo.
    ========================================================== */
 :root {
@@ -22,16 +22,19 @@
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 80px;
+  -webkit-text-size-adjust: 100%;
 }
 body {
   margin: 0;
   background: var(--preto);
   color: var(--branco);
   font: 17px/1.6 var(--fonte-texto);
+  overflow-x: hidden; /* segurança contra rolagem lateral no celular */
 }
 
 img {
   max-width: 100%;
+  height: auto;
   display: block;
 }
 a {
@@ -74,20 +77,6 @@ h3 {
   display: flex;
   gap: 4px;
 }
-
-.logInc{
-  height: 350px;
-}
-
-.frase{
-  height: 100px;
-}
-.logoMini{
-  height: 50px;
-}
-.fra{
-  height: 2px;
-}
 .nav a {
   padding: 8px 14px;
   font-size: 15px;
@@ -117,6 +106,19 @@ h3 {
   display: block;
   height: 3px;
   background: var(--branco);
+  transition:
+    transform 0.25s,
+    opacity 0.25s;
+}
+/* hambúrguer vira "X" quando o menu está aberto */
+.menu-check:checked + .burger span:nth-child(1) {
+  transform: translateY(11px) rotate(45deg);
+}
+.menu-check:checked + .burger span:nth-child(2) {
+  opacity: 0;
+}
+.menu-check:checked + .burger span:nth-child(3) {
+  transform: translateY(-11px) rotate(-45deg);
 }
 
 /* ---------- Botões ---------- */
@@ -149,6 +151,7 @@ h3 {
 /* ---------- Início ---------- */
 .hero {
   min-height: 100vh;
+  min-height: 100svh; /* evita o "pulo" da barra do navegador no celular */
   display: flex;
   align-items: center;
   background:
@@ -167,8 +170,21 @@ h3 {
   font-weight: 900;
 }
 
+/* Imagens do início (logo e frase) */
+.logInc {
+  width: auto;
+  max-width: 100%;
+  max-height: 350px;
+}
+.frase-hero {
+  width: auto;
+  max-width: 100%;
+  max-height: 100px;
+  margin: 12px 0 28px;
+}
+
 .destaque {
-  font: 700 clamp(1px, 3.5vw, 38px)/1.1 var(--fonte-titulo);
+  font: 700 clamp(18px, 3.5vw, 38px)/1.1 var(--fonte-titulo);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--vermelho-claro);
@@ -206,6 +222,7 @@ h2 {
   margin-bottom: 20px;
   padding-left: 20px;
   border-left: 7px solid var(--vermelho);
+  overflow-wrap: anywhere;
 }
 .sub {
   color: var(--cinza);
@@ -249,7 +266,7 @@ h2 {
 /* ---------- Cards de serviço ---------- */
 .grade {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 20px;
 }
 .card {
@@ -277,7 +294,7 @@ h2 {
 /* ---------- Produtos ---------- */
 .produtos {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
   gap: 12px;
 }
 .produtos a {
@@ -296,14 +313,14 @@ h2 {
 }
 
 /* ---------- Marcas ---------- */
-.frase {
+.marcas-frase {
   font: 700 clamp(22px, 3vw, 32px)/1.25 var(--fonte-titulo);
   color: var(--vermelho-claro);
   margin: 0 0 30px;
 }
 .marcas {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: 16px;
 }
 .marca {
@@ -319,6 +336,7 @@ h2 {
 }
 .marca img {
   max-height: 52px;
+  max-width: 100%;
   width: auto;
 }
 .vazia {
@@ -404,6 +422,7 @@ h2 {
 .contato p {
   margin: 0 0 16px;
   color: #d4d4d8;
+  overflow-wrap: anywhere;
 }
 .mapa iframe {
   width: 100%;
@@ -427,6 +446,7 @@ h2 {
 .rodape img {
   height: 44px;
   width: auto;
+  max-width: 100%;
   margin-bottom: 12px;
 }
 .rodape p {
@@ -456,6 +476,18 @@ h2 {
 /* ==========================================================
    RESPONSIVO
    ========================================================== */
+
+/* Notebook pequeno / tablet deitado */
+@media (max-width: 1100px) {
+  .difs {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .galeria {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Tablet */
 @media (max-width: 980px) {
   .linha {
     grid-template-columns: 1fr;
@@ -471,6 +503,12 @@ h2 {
   }
   .contato {
     grid-template-columns: 1fr;
+  }
+  .secao {
+    padding: 72px 0;
+  }
+  .cta {
+    padding: 80px 0;
   }
 }
 
@@ -498,23 +536,104 @@ h2 {
   .menu-check:checked ~ .nav {
     display: flex;
   }
+
+  /* Início centralizado no celular */
+  .hero-in {
+    text-align: center;
+    padding: 100px 0 48px;
+  }
+  .logInc,
+  .frase-hero {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .logInc {
+    max-height: 260px;
+  }
+  .frase-hero {
+    max-height: 80px;
+  }
 }
 
+/* Celular */
 @media (max-width: 560px) {
   body {
     font-size: 16px;
   }
+  .wrap {
+    width: min(100% - 32px, 1150px);
+  }
   .secao {
+    padding: 56px 0;
+  }
+  .cta {
     padding: 64px 0;
+  }
+  h2 {
+    padding-left: 14px;
+    border-left-width: 5px;
+  }
+  .logInc {
+    max-height: 200px;
+  }
+  .frase-hero {
+    max-height: 64px;
   }
   .btn {
     display: block;
     margin-right: 0;
+    text-align: center;
+  }
+  .card {
+    padding: 22px;
+  }
+  .marcas {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .marca {
+    min-height: 84px;
+    padding: 12px;
+  }
+  .galeria {
+    gap: 8px;
   }
   .difs {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .mapa iframe {
+    min-height: 280px;
   }
   .rodape-in {
     flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+  .rodape nav {
+    justify-content: center;
+  }
+}
+
+/* Telas muito pequenas */
+@media (max-width: 360px) {
+  .galeria {
+    grid-template-columns: 1fr;
+  }
+  .nav a {
+    font-size: 14px;
+  }
+}
+
+/* Respeita quem prefere menos animação */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-in {
+    animation: none;
+  }
+  * {
+    transition: none !important;
   }
 }
